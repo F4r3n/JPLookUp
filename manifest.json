@@ -1,0 +1,45 @@
+{
+    "name": "JPLookup",
+    "description": "Read kanji",
+    "version": "2.0",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting",
+      "declarativeContent"
+    ],
+    "web_accessible_resources": [{
+      "resources": ["js/kuromoji.js", "js/jpLookUp.js", "assets/dict/*", "css/jpLookUp.css", "wanakana.min.js"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+     }],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'none'",
+      "content_scripts": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    },
+    "host_permissions" : [
+      "*://*.jisho.org/api/v1/search/words/*"
+    ],
+    "externally_connectable": {
+      "matches": ["*://jisho.org/api/v1/search/words/*"]
+    },
+    "manifest_version": 3,
+    "action": {
+       
+        "default_icon": {
+            "16": "/images/get_started16.png",
+            "32": "/images/get_started32.png",
+            "48": "/images/get_started48.png",
+            "128": "/images/get_started128.png"
+        }
+    },
+    "icons": {
+        "16": "/images/get_started16.png",
+        "32": "/images/get_started32.png",
+        "48": "/images/get_started48.png",
+        "128": "/images/get_started128.png"
+      }
+}

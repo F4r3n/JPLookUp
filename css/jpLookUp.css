@@ -1,0 +1,58 @@
+jpLookUp_word:hover {
+  background-color: rgba(151, 151, 224, 0.9);
+  margin:15% auto;
+  color: black;
+  border-radius: 6px;
+
+}
+
+jpLookUp_word {
+  position: relative;
+  z-index: 11;
+}
+
+jpLookUp_word > jpLookUp_word_furigana{
+    display: none;
+}
+
+jpLookUp_word:hover  jpLookUp_word_furigana{
+    display: inline-block;
+    top: -1.5em;
+    max-width: 200%;
+    width: fit-content;
+    left: 0;
+    font-size: calc(80%);
+    background-color: rgba(151, 151, 224, 0.9);
+    color: black;
+    position: absolute;
+    white-space: nowrap;
+    border-radius: 6px;
+
+}
+
+/* The actual popup */
+.jpLookUpPopup .jpLookUpPopupText {
+    visibility: hidden;
+    width: 160px;
+    background-color: rgba(85, 85, 85, 0.753);
+    color: #fff;
+    border-radius: 6px;
+    padding: 4px 4px 4px 4px;
+    position: absolute;
+    z-index: 11;
+  }
+  
+
+  
+  /* Toggle this class - hide and show the popup */
+  .jpLookUpPopup .show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+  }
+
+  .jpLookUpPopup .hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+  }
