@@ -6,28 +6,19 @@ jpLookUp_word:hover {
 
 }
 
-jpLookUp_word {
-  position: relative;
-  z-index: 11;
-}
-
-jpLookUp_word > jpLookUp_word_furigana{
+jpLookUp_word_furigana{
     display: none;
 }
 
-jpLookUp_word:hover  jpLookUp_word_furigana{
-    display: inline-block;
-    top: -1.5em;
-    max-width: 200%;
-    width: fit-content;
-    left: 0;
-    font-size: calc(80%);
-    background-color: rgba(151, 151, 224, 0.9);
-    color: black;
-    position: absolute;
-    white-space: nowrap;
-    border-radius: 6px;
-
+jpLookUp_word_furigana.show{
+  display: inline-block;
+  font-size: calc(80%);
+  background-color: rgba(151, 151, 224, 0.9);
+  color: black;
+  position: absolute;
+  white-space: nowrap;
+  border-radius: 6px;
+  padding: 0 0.5%;
 }
 
 /* The actual popup */

@@ -1,7 +1,7 @@
 {
     "name": "JPLookup",
     "description": "Read kanji",
-    "version": "2.0",
+    "version": "1.0",
     "permissions": [
       "activeTab",
       "storage",
@@ -9,7 +9,7 @@
       "declarativeContent"
     ],
     "web_accessible_resources": [{
-      "resources": ["js/kuromoji.js", "js/jpLookUp.js", "assets/dict/*", "css/jpLookUp.css", "wanakana.min.js"],
+      "resources": ["js/kuromoji.js", "js/jpLookUp.js", "assets/dict/*", "css/jpLookUp.css", "js/wanakana.min.js"],
       "matches": ["<all_urls>"],
       "extension_ids": []
      }],

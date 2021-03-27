@@ -16,6 +16,24 @@ function initTokenizer(url) {
     })
 }
 
+function getCoords(elem) { // crossbrowser version
+    var box = elem.getBoundingClientRect();
+
+    var body = document.body;
+    var docEl = document.documentElement;
+
+    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    var clientTop = docEl.clientTop || body.clientTop || 0;
+    var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+    var top  = box.top +  scrollTop - clientTop;
+    var left = box.left + scrollLeft - clientLeft;
+
+    return { top: Math.round(top), left: Math.round(left) };
+}
+
 function parseHTML()
 {
     var els = document.body.getElementsByTagName("*");
@@ -35,6 +53,9 @@ function parseHTML()
         }
     }
 
+    var jpLookUp_word_furigana = document.createElement("jpLookUp_word_furigana")
+    document.body.appendChild(jpLookUp_word_furigana)
+
     array.forEach( element =>{
         var path = window.JPTokenizer.tokenize(element.node.textContent)
         var text = ""
@@ -46,9 +67,11 @@ function parseHTML()
                 if(wanakana.isKatakana(furigana)) {
                     furigana = wanakana.toHiragana(furigana)
                 }
-                text += `<jpLookUp_word>${realWord}`
-                if(realWord != word.reading && !wanakana.isHiragana(realWord))
-                    text += `<jpLookUp_word_furigana>${furigana}</jpLookUp_word_furigana>` 
+                if(!(realWord != word.reading && !wanakana.isHiragana(realWord)))
+                    furigana = ""
+                
+                text += `<jpLookUp_word data=${furigana}>${realWord}`
+
                 text += "</jpLookUp_word>"
             }
             else
@@ -60,6 +83,27 @@ function parseHTML()
         var newElement = document.createElement("jpLookUp")
         newElement.innerHTML = text
         element.parent.replaceChild(newElement, element.node)
+        newElement.addEventListener('mouseover', event => {
+
+            var furigana = event.target.getAttribute("data")
+            if(furigana !== "") {
+
+                if(!jpLookUp_word_furigana.classList.contains("show"))
+                    jpLookUp_word_furigana.classList.toggle("show")
+
+                const coords = getCoords(event.target)
+
+                jpLookUp_word_furigana.style.left = coords.left + 'px'
+                jpLookUp_word_furigana.style.top = coords.top - jpLookUp_word_furigana.offsetHeight + 'px'
+                jpLookUp_word_furigana.innerText = furigana
+                jpLookUp_word_furigana.style.left
+            }
+        })
+
+        newElement.addEventListener('mouseout', event => {
+            if(jpLookUp_word_furigana.classList.contains("show"))
+                jpLookUp_word_furigana.classList.toggle("show")
+        })
     });
 
     var popup = document.createElement("div")
@@ -92,23 +136,7 @@ function parseHTML()
             if(popupText.classList.contains("hide"))
                 popupText.classList.toggle("hide")
 
-            function getCoords(elem) { // crossbrowser version
-                var box = elem.getBoundingClientRect();
-            
-                var body = document.body;
-                var docEl = document.documentElement;
-            
-                var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-                var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-            
-                var clientTop = docEl.clientTop || body.clientTop || 0;
-                var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-            
-                var top  = box.top +  scrollTop - clientTop;
-                var left = box.left + scrollLeft - clientLeft;
-            
-                return { top: Math.round(top), left: Math.round(left) };
-            }
+
 
 
             event.target.addEventListener('mouseleave', event => {
