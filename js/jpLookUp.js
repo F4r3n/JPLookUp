@@ -92,8 +92,7 @@ function parseHTML()
                     jpLookUp_word_furigana.classList.toggle("show")
 
                 const coords = getCoords(event.target)
-
-                jpLookUp_word_furigana.style.left = coords.left + 'px'
+                jpLookUp_word_furigana.style.left = coords.left + event.target.offsetWidth/2.0 - jpLookUp_word_furigana.offsetWidth/2.0 + 'px'
                 jpLookUp_word_furigana.style.top = coords.top - jpLookUp_word_furigana.offsetHeight + 'px'
                 jpLookUp_word_furigana.innerText = furigana
                 jpLookUp_word_furigana.style.left
@@ -193,12 +192,10 @@ function parseHTML()
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        console.log(request)
         switch(request.messageID) {
             case 0:
                 {
                     initTokenizer(request.url).then( tokenizer => {
-                        console.log("done")
                         window.JPTokenizer = tokenizer
                         sendResponse({installed: true})
                     })
